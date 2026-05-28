@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, ScrollView, Platform } from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Picker } from "@react-native-picker/picker";
 import Toast from "react-native-toast-message";
@@ -57,9 +57,10 @@ const AddScreen = ({ navigation }) => {
   };
 
   return (
-    <ScrollView>
+    <ScrollView contentContainerStyle={styles.scrollContent} keyboardShouldPersistTaps="handled">
       <View style={styles.addScreenInnerContainer}>
-        <View style={styles.addScreenFormContainer}>
+        <View style={styles.formCard}>
+          <View style={styles.addScreenFormContainer}>
           <CustomTextInput
             label="First Name"
             maxLength={30}
@@ -76,7 +77,7 @@ const AddScreen = ({ navigation }) => {
           />
 
           <Text style={styles.fieldLabel}>Relationship</Text>
-          <View style={styles.pickerContainer}>
+          <View style={[styles.pickerContainer, person.errors.relationship ? styles.pickerError : null]}>
             <Picker
               selectedValue={person.relationship}
               onValueChange={(value) => setField("relationship", value)}
@@ -91,16 +92,17 @@ const AddScreen = ({ navigation }) => {
             </Picker>
           </View>
           {person.errors.relationship ? <Text style={styles.errorText}>{person.errors.relationship}</Text> : null}
-        </View>
+          </View>
 
-        <View style={styles.addScreenButtonsContainer}>
-          <CustomButton
-            text="Cancel"
-            onPress={() => navigation.goBack()}
-            buttonStyle={styles.cancelButton}
-            width="44%"
-          />
-          <CustomButton text="Save" onPress={savePerson} buttonStyle={styles.saveButton} width="44%" />
+          <View style={styles.addScreenButtonsContainer}>
+            <CustomButton
+              text="Cancel"
+              onPress={() => navigation.goBack()}
+              buttonStyle={styles.cancelButton}
+              width="47%"
+            />
+            <CustomButton text="Save" onPress={savePerson} buttonStyle={styles.saveButton} width="47%" />
+          </View>
         </View>
       </View>
     </ScrollView>
@@ -108,49 +110,46 @@ const AddScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  scrollContent: { flexGrow: 1 },
   addScreenInnerContainer: {
     flex: 1,
-    alignItems: "center",
-    paddingTop: 20,
+    padding: 16,
     width: "100%",
-    paddingBottom: 20,
+    backgroundColor: "#f2f4f7",
+    justifyContent: "center",
   },
-  addScreenFormContainer: { width: "96%" },
-  fieldLabel: { marginLeft: 10, marginBottom: 4 },
+  formCard: {
+    backgroundColor: "#fff",
+    borderRadius: 14,
+    padding: 16,
+    shadowColor: "#000",
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 3,
+  },
+  addScreenFormContainer: { width: "100%" },
+  fieldLabel: { marginBottom: 6, color: "#222", fontSize: 16 },
   pickerContainer: {
-    ...Platform.select({
-      ios: {},
-      android: {
-        width: "96%",
-        borderRadius: 8,
-        borderColor: "#c0c0c0",
-        borderWidth: 2,
-        marginLeft: 10,
-        marginBottom: 8,
-      },
-    }),
+    width: "100%",
+    borderRadius: 8,
+    borderColor: "#c0c0c0",
+    borderWidth: 1.5,
+    marginBottom: 8,
+    backgroundColor: "#fff",
   },
   picker: {
-    ...Platform.select({
-      ios: {
-        width: "96%",
-        borderRadius: 8,
-        borderColor: "#c0c0c0",
-        borderWidth: 2,
-        marginLeft: 10,
-        marginBottom: 8,
-      },
-      android: {},
-    }),
+    width: "100%",
   },
-  errorText: { color: "red", marginLeft: 10, marginBottom: 8 },
+  pickerError: { borderColor: "red" },
+  errorText: { color: "red", marginBottom: 8 },
   addScreenButtonsContainer: {
     flexDirection: "row",
-    justifyContent: "center",
+    justifyContent: "space-between",
     marginTop: 20,
-    width: "96%",
+    width: "100%",
   },
-  cancelButton: { backgroundColor: "gray" },
+  cancelButton: { backgroundColor: "#6b7280" },
   saveButton: { backgroundColor: "green" },
 });
 

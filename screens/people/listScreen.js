@@ -1,8 +1,9 @@
 import React, { useCallback, useState } from "react";
-import { View, FlatList, Alert, StyleSheet, Text } from "react-native";
+import { View, FlatList, Alert, StyleSheet, Text, TouchableOpacity } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Toast from "react-native-toast-message";
 import { useFocusEffect } from "@react-navigation/native";
+import { Ionicons } from "@expo/vector-icons";
 import CustomButton from "../../components/customButton";
 
 const ListScreen = ({ navigation }) => {
@@ -56,37 +57,54 @@ const ListScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <CustomButton text="Add Person" onPress={() => navigation.navigate("PeopleAdd")} />
-      <FlatList
-        data={people}
-        keyExtractor={(item) => item.key}
-        ListEmptyComponent={<Text style={styles.emptyText}>No people yet.</Text>}
-        renderItem={({ item }) => (
-          <View style={styles.personItem}>
-            <View style={styles.personTextContainer}>
-              <Text style={styles.text}>{`${item.firstname} ${item.lastname}`}</Text>
-              <Text style={styles.subText}>{item.relationship}</Text>
+      <View style={styles.card}>
+        <CustomButton text="Add Person" onPress={() => navigation.navigate("PeopleAdd")} />
+        <FlatList
+          data={people}
+          keyExtractor={(item) => item.key}
+          contentContainerStyle={styles.listContent}
+          ListEmptyComponent={<Text style={styles.emptyText}>No people yet.</Text>}
+          renderItem={({ item }) => (
+            <View style={styles.personItem}>
+              <View style={styles.personTextContainer}>
+                <Text style={styles.text}>{`${item.firstname} ${item.lastname}`}</Text>
+                <Text style={styles.subText}>{item.relationship}</Text>
+              </View>
+              <TouchableOpacity
+                onPress={() => deletePerson(item.key)}
+                style={styles.deleteIconButton}
+                accessibilityRole="button"
+                accessibilityLabel={`Delete ${item.firstname} ${item.lastname}`}
+              >
+                <Ionicons name="trash-outline" size={22} color="#c62828" />
+              </TouchableOpacity>
             </View>
-            <CustomButton
-              text="Delete"
-              onPress={() => deletePerson(item.key)}
-              buttonStyle={styles.deleteButton}
-              width="35%"
-            />
-          </View>
-        )}
-      />
+          )}
+        />
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20, backgroundColor: "#fff" },
+  container: { flex: 1, padding: 16, backgroundColor: "#f2f4f7" },
+  card: {
+    flex: 1,
+    backgroundColor: "#fff",
+    borderRadius: 14,
+    padding: 14,
+    shadowColor: "#000",
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 3,
+  },
+  listContent: { paddingTop: 8 },
   personItem: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingVertical: 10,
+    paddingVertical: 12,
     borderBottomWidth: 1,
     borderBottomColor: "#ececec",
   },
@@ -94,7 +112,16 @@ const styles = StyleSheet.create({
   text: { fontSize: 18 },
   subText: { color: "#666", marginTop: 2 },
   emptyText: { marginTop: 20, textAlign: "center", color: "#666" },
-  deleteButton: { backgroundColor: "#c62828" },
+  deleteIconButton: {
+    width: 38,
+    height: 38,
+    borderRadius: 19,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#fff5f5",
+    borderWidth: 1,
+    borderColor: "#ffd5d5",
+  },
 });
 
 export default ListScreen;
