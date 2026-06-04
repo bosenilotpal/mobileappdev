@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { View, StyleSheet, ScrollView } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Picker } from "@react-native-picker/picker";
 import Toast from "react-native-toast-message";
 import CustomButton from "../../components/customButton";
 import CustomTextInput from "../../components/customTextInput";
+import CustomPickerField from "../../components/customPickerField";
 import {
   validateName,
   validatePhone,
@@ -85,57 +86,48 @@ const AddScreen = ({ navigation }) => {
             error={restaurant.errors.name}
           />
 
-          <Text style={styles.fieldLabel}>Cuisine</Text>
-          <View style={[styles.pickerContainer, restaurant.errors.cuisine ? styles.pickerError : null]}>
-            <Picker
-              prompt="Cuisine"
-              selectedValue={restaurant.cuisine}
-              onValueChange={(value) => setField("cuisine", value)}
-              style={styles.picker}
-            >
-              <Picker.Item label="" value="" />
-              <Picker.Item label="American" value="American" />
-              <Picker.Item label="Chinese" value="Chinese" />
-              <Picker.Item label="Italian" value="Italian" />
-              <Picker.Item label="Mexican" value="Mexican" />
-              <Picker.Item label="Other" value="Other" />
-            </Picker>
-          </View>
-          {restaurant.errors.cuisine ? <Text style={styles.errorText}>{restaurant.errors.cuisine}</Text> : null}
+          <CustomPickerField
+            label="Cuisine"
+            prompt="Cuisine"
+            selectedValue={restaurant.cuisine}
+            onValueChange={(value) => setField("cuisine", value)}
+            error={restaurant.errors.cuisine}
+          >
+            <Picker.Item label="" value="" />
+            <Picker.Item label="American" value="American" />
+            <Picker.Item label="Chinese" value="Chinese" />
+            <Picker.Item label="Italian" value="Italian" />
+            <Picker.Item label="Mexican" value="Mexican" />
+            <Picker.Item label="Other" value="Other" />
+          </CustomPickerField>
 
-          <Text style={styles.fieldLabel}>Price</Text>
-          <View style={[styles.pickerContainer, restaurant.errors.price ? styles.pickerError : null]}>
-            <Picker
-              selectedValue={restaurant.price}
-              onValueChange={(value) => setField("price", value)}
-              style={styles.picker}
-            >
-              <Picker.Item label="" value="" />
-              <Picker.Item label="1" value="1" />
-              <Picker.Item label="2" value="2" />
-              <Picker.Item label="3" value="3" />
-              <Picker.Item label="4" value="4" />
-              <Picker.Item label="5" value="5" />
-            </Picker>
-          </View>
-          {restaurant.errors.price ? <Text style={styles.errorText}>{restaurant.errors.price}</Text> : null}
+          <CustomPickerField
+            label="Price"
+            selectedValue={restaurant.price}
+            onValueChange={(value) => setField("price", value)}
+            error={restaurant.errors.price}
+          >
+            <Picker.Item label="" value="" />
+            <Picker.Item label="1" value="1" />
+            <Picker.Item label="2" value="2" />
+            <Picker.Item label="3" value="3" />
+            <Picker.Item label="4" value="4" />
+            <Picker.Item label="5" value="5" />
+          </CustomPickerField>
 
-          <Text style={styles.fieldLabel}>Rating</Text>
-          <View style={[styles.pickerContainer, restaurant.errors.rating ? styles.pickerError : null]}>
-            <Picker
-              selectedValue={restaurant.rating}
-              onValueChange={(value) => setField("rating", value)}
-              style={styles.picker}
-            >
-              <Picker.Item label="" value="" />
-              <Picker.Item label="1" value="1" />
-              <Picker.Item label="2" value="2" />
-              <Picker.Item label="3" value="3" />
-              <Picker.Item label="4" value="4" />
-              <Picker.Item label="5" value="5" />
-            </Picker>
-          </View>
-          {restaurant.errors.rating ? <Text style={styles.errorText}>{restaurant.errors.rating}</Text> : null}
+          <CustomPickerField
+            label="Rating"
+            selectedValue={restaurant.rating}
+            onValueChange={(value) => setField("rating", value)}
+            error={restaurant.errors.rating}
+          >
+            <Picker.Item label="" value="" />
+            <Picker.Item label="1" value="1" />
+            <Picker.Item label="2" value="2" />
+            <Picker.Item label="3" value="3" />
+            <Picker.Item label="4" value="4" />
+            <Picker.Item label="5" value="5" />
+          </CustomPickerField>
 
           <CustomTextInput
             label="Phone"
@@ -162,19 +154,16 @@ const AddScreen = ({ navigation }) => {
             autoCapitalize="none"
           />
 
-          <Text style={styles.fieldLabel}>Delivery?</Text>
-          <View style={[styles.pickerContainer, restaurant.errors.delivery ? styles.pickerError : null]}>
-            <Picker
-              selectedValue={restaurant.delivery}
-              onValueChange={(value) => setField("delivery", value)}
-              style={styles.picker}
-            >
-              <Picker.Item label="" value="" />
-              <Picker.Item label="Yes" value="Yes" />
-              <Picker.Item label="No" value="No" />
-            </Picker>
-          </View>
-          {restaurant.errors.delivery ? <Text style={styles.errorText}>{restaurant.errors.delivery}</Text> : null}
+          <CustomPickerField
+            label="Delivery?"
+            selectedValue={restaurant.delivery}
+            onValueChange={(value) => setField("delivery", value)}
+            error={restaurant.errors.delivery}
+          >
+            <Picker.Item label="" value="" />
+            <Picker.Item label="Yes" value="Yes" />
+            <Picker.Item label="No" value="No" />
+          </CustomPickerField>
           </View>
 
           <View style={styles.addScreenButtonsContainer}>
@@ -212,20 +201,6 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   addScreenFormContainer: { width: "100%" },
-  fieldLabel: { marginBottom: 6, color: "#222", fontSize: 16 },
-  pickerContainer: {
-    width: "100%",
-    borderRadius: 8,
-    borderColor: "#c0c0c0",
-    borderWidth: 1.5,
-    marginBottom: 8,
-    backgroundColor: "#fff",
-  },
-  picker: {
-    width: "100%",
-  },
-  pickerError: { borderColor: "red" },
-  errorText: { color: "red", marginBottom: 8 },
   addScreenButtonsContainer: {
     flexDirection: "row",
     justifyContent: "space-between",

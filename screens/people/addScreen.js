@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { View, StyleSheet, ScrollView } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Picker } from "@react-native-picker/picker";
 import Toast from "react-native-toast-message";
 import CustomButton from "../../components/customButton";
 import CustomTextInput from "../../components/customTextInput";
+import CustomPickerField from "../../components/customPickerField";
 import { validateFirstName, validateLastName } from "./validators";
 
 const createInitialPerson = () => ({
@@ -76,22 +77,19 @@ const AddScreen = ({ navigation }) => {
             error={person.errors.lastname}
           />
 
-          <Text style={styles.fieldLabel}>Relationship</Text>
-          <View style={[styles.pickerContainer, person.errors.relationship ? styles.pickerError : null]}>
-            <Picker
-              selectedValue={person.relationship}
-              onValueChange={(value) => setField("relationship", value)}
-              style={styles.picker}
-            >
-              <Picker.Item label="" value="" />
-              <Picker.Item label="Me" value="Me" />
-              <Picker.Item label="Family" value="Family" />
-              <Picker.Item label="Friend" value="Friend" />
-              <Picker.Item label="Coworker" value="Coworker" />
-              <Picker.Item label="Other" value="Other" />
-            </Picker>
-          </View>
-          {person.errors.relationship ? <Text style={styles.errorText}>{person.errors.relationship}</Text> : null}
+          <CustomPickerField
+            label="Relationship"
+            selectedValue={person.relationship}
+            onValueChange={(value) => setField("relationship", value)}
+            error={person.errors.relationship}
+          >
+            <Picker.Item label="" value="" />
+            <Picker.Item label="Me" value="Me" />
+            <Picker.Item label="Family" value="Family" />
+            <Picker.Item label="Friend" value="Friend" />
+            <Picker.Item label="Coworker" value="Coworker" />
+            <Picker.Item label="Other" value="Other" />
+          </CustomPickerField>
           </View>
 
           <View style={styles.addScreenButtonsContainer}>
@@ -129,20 +127,6 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   addScreenFormContainer: { width: "100%" },
-  fieldLabel: { marginBottom: 6, color: "#222", fontSize: 16 },
-  pickerContainer: {
-    width: "100%",
-    borderRadius: 8,
-    borderColor: "#c0c0c0",
-    borderWidth: 1.5,
-    marginBottom: 8,
-    backgroundColor: "#fff",
-  },
-  picker: {
-    width: "100%",
-  },
-  pickerError: { borderColor: "red" },
-  errorText: { color: "red", marginBottom: 8 },
   addScreenButtonsContainer: {
     flexDirection: "row",
     justifyContent: "space-between",

@@ -57,18 +57,19 @@ CustomTextInput.propTypes = {
 };
 
 const styles = StyleSheet.create({
-  container: { marginBottom: 12, width: "100%" },
-  label: { marginBottom: 6, color: "#222", fontSize: 16 },
+  container: { marginBottom: 10, width: "100%" },
+  label: { marginBottom: 4, color: "#222", fontSize: 14 },
   input: {
     width: "100%",
-    borderRadius: 8,
+    borderRadius: 6,
     borderColor: "#c0c0c0",
-    borderWidth: 1.5,
+    borderWidth: 1,
     backgroundColor: "#fff",
-    paddingHorizontal: 12,
-    paddingVertical: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 6,
     marginBottom: 2,
-    fontSize: 16,
+    fontSize: 14,
+    height: 36,
   },
   inputError: {
     borderColor: "red",
