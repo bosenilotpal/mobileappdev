@@ -7,9 +7,11 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.bosenilotpal.restaurantchooser"
     },
     "android": {
+      "package": "com.bosenilotpal.restaurantchooser",
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/android-icon-foreground.png",
@@ -19,6 +21,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "67e6ea72-6cc3-4b1b-9ad2-d759bff02d4a"
+      }
+    },
+    "owner": "bosenilotpal"
   }
 }
