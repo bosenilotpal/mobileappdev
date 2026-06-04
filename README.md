@@ -72,50 +72,52 @@ Three main tabs:
 └── week 3-5/snapshots/    # Evaluation screenshots (add your own)
 ```
 
-## Expo build (EAS) — finished artifact
+## Publish on [Expo](https://expo.dev/)
 
-This project uses [EAS Build](https://docs.expo.dev/build/introduction/) for installable builds. A submission-ready build must show status **finished** in the Expo dashboard.
+This project is configured for [EAS Build](https://docs.expo.dev/build/introduction/). Publishing creates a cloud build on Expo and lists it under your **RestaurantChooser** project.
 
-### Create a build (first time)
-
-1. Install EAS CLI and log in:
+### One-time setup (run in your terminal)
 
 ```bash
 npm install -g eas-cli
 eas login
+eas init
 ```
 
-2. Configure the project (if prompted):
+`eas init` links this repo to a project on https://expo.dev and adds a `projectId` to `app.json`.
+
+### Publish a build (Android APK — recommended for testing)
 
 ```bash
-eas build:configure
+npm run build:preview
 ```
 
-3. Start a build (example: Android preview APK):
+Or:
 
 ```bash
 eas build --platform android --profile preview
 ```
 
-4. When the build completes, open the **finished** build in the Expo dashboard and copy the artifact link.
+- First build may prompt you to generate Android credentials — choose **Generate new keystore**.
+- Wait until status is **finished** on the Expo dashboard.
+- Open the build page and copy the **artifact** / **Install** link.
 
-### View all builds
+### View your published builds
 
-1. Sign in at https://expo.dev  
-2. Open project **RestaurantChooser** → **Builds**  
-3. Open the build with status **finished** and copy the artifact URL  
+1. Sign in at [expo.dev](https://expo.dev/)
+2. Open **RestaurantChooser** → **Builds**
+3. Select the row with status **finished**
 
-Direct dashboard path (replace `YOUR_EXPO_USERNAME` with your Expo account username):
-
-`https://expo.dev/accounts/YOUR_EXPO_USERNAME/projects/RestaurantChooser/builds`
-
-### Finished build artifact link
+### Finished build artifact link (coursework)
 
 **Build artifact (status: finished):**  
-<!-- Update this line after your EAS build completes -->
-`https://expo.dev/artifacts/eas/YOUR-BUILD-ID`
+https://expo.dev/accounts/bosenilotpal/projects/RestaurantChooser/builds/50093131-0299-443e-8b0c-506b03d23476
 
-Replace `YOUR-BUILD-ID` with the ID from the finished build page (Build details → **Artifact** / **Install** link).
+### Production build (optional)
+
+```bash
+npm run build:android
+```
 
 Example of what to look for in the dashboard:
 
